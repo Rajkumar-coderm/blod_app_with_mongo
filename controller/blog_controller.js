@@ -28,8 +28,6 @@ exports.postBlog = async (req, res) => {
   }
 };
 
-
-
 /// this is post api for user Like unlike first user login and then must be like post..
 /// this is method is give one parems this is blog id and and then search user already like or not,,,,
 ///
@@ -77,8 +75,6 @@ exports.postLikes = async (req, res) => {
   }
 };
 
-
-
 /// this is get api for the all date get and send the data..
 exports.getAllBlogs = async (req, res) => {
   try {
@@ -101,7 +97,7 @@ exports.getAllBlogs = async (req, res) => {
         limit: limit,
       };
     }
-    let data = await blog.find().skip(startIndex).limit(limit);
+    let data = await blog.find().populate('like').skip(startIndex).limit(limit);
     res.status(200).json({
       message: "Request successfully completed!",
       data: data,
@@ -118,8 +114,6 @@ exports.getAllBlogs = async (req, res) => {
     });
   }
 };
-
-
 
 /// this is data delete api for login user able to delte over data..
 ///
@@ -155,8 +149,6 @@ exports.deleteBlogs = async (req, res) => {
     });
   }
 };
-
-
 
 /// this is update [updateBlogs] method in update one user data as update blog using blog id..
 ///
@@ -201,8 +193,6 @@ exports.updateBlogs = async (req, res) => {
   }
 };
 
-
-
 /// get all blog using user id..
 exports.getBlogByUserId = async (req, res) => {
   try {
@@ -228,7 +218,7 @@ exports.getBlogByUserId = async (req, res) => {
 /// search by titile for blog and other things..
 exports.findBlogByTitle = async (req, res) => {
   try {
-    var data = await blog.find({ title: { $regex: req.query.query } }); /// <--- [query] this is key for search by title in params..
+    var data = await blog.find({ title: { $regex: req.query.query }, } ); /// <--- [query] this is key for search by title in params..
     if (data.length != 0) {
       res.status(200).json({
         message: "Request successfully completed!",
@@ -237,11 +227,11 @@ exports.findBlogByTitle = async (req, res) => {
         status: "success",
       });
     } else {
-      res.status(404).json({
+      res.status(200).json({
         message: "Data Not found",
         data: [],
-        errr_code: 404,
-        status: "Request not completed successfuly",
+        errr_code: 200,
+        status: "Request completed successfuly",
       });
     }
   } catch (error) {

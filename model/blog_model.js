@@ -22,9 +22,9 @@ const BlogModel = mongoose.Schema(
       required: true,
       default: true,
     },
-    likes: {
-      type: Array,
-      ref: "LikeUnlike"
+    like: {
+      type: Schema.Types.Array,
+      ref: "likeUnlike"
     }
   },
   {

@@ -20,7 +20,7 @@ exports.authenticationToken = (req, res, next) => {
         message: "Unauthorized",
       });
     }
-    req.data = data;
+    req.data = data;  
     next();
   });
 };

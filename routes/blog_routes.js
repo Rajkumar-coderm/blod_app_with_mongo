@@ -11,12 +11,11 @@ const {
 const { authenticationToken } = require("../auth/jwt_auth");
 
 router.post("/", authenticationToken, postBlog);
-router.get("/", authenticationToken, getAllBlogs);
+router.get("/",  getAllBlogs);
 router.post("/like/:blogId", authenticationToken, postLikes);
 router.delete("/:blogId", authenticationToken, deleteBlogs);
 router.put("/:blogId", authenticationToken, updateBlogs);
-router.get("/userBlog", authenticationToken, getBlogByUserId);
+router.get("/userBlog", getBlogByUserId);
 router.get('/search',findBlogByTitle)
 
 module.exports = router;
-``

@@ -1,14 +1,20 @@
 require("./db/db");
-const express = require("express"); /// this is line import express from npm.
+var bodyParser = require('body-parser');
+const express = require("express");
 const morgan = require('morgan');
 require('dotenv').config()  /// this line is config .env file in over sever root.
 const app = express();
-app.use(express.json()); /// this is middelware it is comman sevice to join clint side to server side.
-app.use(morgan('dev')); ///this is loger for log over sever is runing retung [Request Method and Status],
+app.use(express.json({limit:"200mb"})); /// this is middelware it is comman sevice to join clint side to server side.
+app.use(morgan('dev')); 
+app.use(bodyParser.json({limit:'2gb'})); 
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(upload.single()); 
 const userRouts = require("./routes/user_routes");
 const blogRoutes = require('./routes/blog_routes');
-app.use("/api/vi/user", userRouts);
-app.use('/api/vi/blog',blogRoutes);
+const fileUploadRoutes = require('./routes/flie_upload_routes');
+app.use("/api/v1/user", userRouts);
+app.use('/api/v1/blog',blogRoutes);
+app.use('/api/v1/file',fileUploadRoutes);
 
 // const imageExtensions = require('image-extensions');
 
@@ -25,6 +31,8 @@ app.use('*',(req,res)=>{
 const port = process.env.PORT || 3000;
 
 /// this is listen to the server to run over code with express..
-app.listen(port, () => {
-  console.log(`server is reaning at ${port}`);
+app.listen(port,'192.168.0.188', () => {
+  console.log(`server is reaning at http://192.168.0.188:${port}/api/v1/blog`);
 });
+
+// అఖిలం అఖిల
