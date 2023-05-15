@@ -10,13 +10,12 @@ module.exports.fileUpload = async (req, res) => {
     var response = await fileModel.insertMany(data);
     if (response != null || response != undefined) {
       res.status(200).json({
-        message: "File Upload successfully",
+        message: "File Upload successfully",      
         data: data,
         errr_code: 200,
         status: "success",
       });
     } else {
-      console.log("lasan");
       res.status(404).json({
         message: "Somthing went wrong",
         data: data,
@@ -30,7 +29,7 @@ module.exports.fileUpload = async (req, res) => {
       data: [],
       errr_code: 404,
       status: "Request not completed successfuly",
-    });
+    })
   }
 };
 

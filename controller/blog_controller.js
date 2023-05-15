@@ -1,5 +1,6 @@
 const blog = require("../model/blog_model");
 const likeUnlike = require("../model/like_unlike_model");
+const twilio = require("twilio");
 
 /// this is post bolog api for user post ower blog in perticular category...
 exports.postBlog = async (req, res) => {
@@ -97,7 +98,9 @@ exports.getAllBlogs = async (req, res) => {
         limit: limit,
       };
     }
-    let data = await blog.find().populate('like').skip(startIndex).limit(limit);
+
+    let data = await blog.find().populate("like").skip(startIndex).limit(limit);
+    // this.sendSms('+919168716592','Hii')
     res.status(200).json({
       message: "Request successfully completed!",
       data: data,
@@ -218,7 +221,7 @@ exports.getBlogByUserId = async (req, res) => {
 /// search by titile for blog and other things..
 exports.findBlogByTitle = async (req, res) => {
   try {
-    var data = await blog.find({ title: { $regex: req.query.query }, } ); /// <--- [query] this is key for search by title in params..
+    var data = await blog.find({ title: { $regex: req.query.query } }); /// <--- [query] this is key for search by title in params..
     if (data.length != 0) {
       res.status(200).json({
         message: "Request successfully completed!",
@@ -243,3 +246,28 @@ exports.findBlogByTitle = async (req, res) => {
     });
   }
 };
+
+
+let otp = Math.floor(1000 + Math.random() * 9000);
+exports.getOtp = otp
+module.exports.sendSms = (phoneNumer,message) => {
+  try {
+    const accountSid = process.env.AcoundSid; // Your Account SID from www.twilio.com/console
+    const authToken = process.env.AuthToken; // Your Auth Token from www.twilio.com/console
+    const client = twilio(accountSid, authToken);
+    client.messages
+      .create({
+        body: `${otp} is your one time password (OTP) for phone verification`,
+        messagingServiceSid: "MGb19730a4425bd5fc000852fac8bf83ed",
+        to: phoneNumer,
+        from: "+19295773561",
+      })
+      .then((message) =>
+        console.log(message.sid)
+      )
+      .catch((e) => console.log(e.message));
+  } catch (error) {
+    console.log(error);
+  }
+};
+

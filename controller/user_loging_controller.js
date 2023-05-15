@@ -2,6 +2,7 @@ const db = require("../model/user_model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {genrateJwtToken}=require('../auth/jwt_auth');
+const {otp} = require('./blog_controller')
 
 
 /// this is method is loging user for those user for this is user signup already..
@@ -47,4 +48,8 @@ module.exports.userLoging = async (req, res) => {
       status: "Request not completed successfuly",
     });
   }
+};
+
+module.exports.signupWithMobile = async(req,res)=>{
+  
 };
